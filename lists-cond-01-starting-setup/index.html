@@ -23,12 +23,16 @@
 
     <p v-if="goals.length === 0">No goals have been added yet - please start adding some!</p>
     <ul v-else>
-      <li v-for="(goal, ind) in goals" :key="goal">{{ goal }} - {{ ind }}</li>
+      <li v-for="(goal, ind) in goals" :key="goal" @click="removeGoal(ind)">
+        {{ goal }} - {{ ind }}</li>
     </ul>
-    <ul>
+    <!-- <ul>
       <li v-for="(value, key, index) in members" style="text-align: left;">
         {{ index + 1}} - {{ key }}: {{ value }}</li>
-    </ul>
+    </ul> -->
+    <!-- <ul>
+      <li v-for="num in 10">{{ num }}</li>
+    </ul> -->
   </section>
 </body>
 
