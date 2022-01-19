@@ -2,8 +2,18 @@
   <section>
     <header><h1>My Friends</h1></header>
     <ul>
-      <friend-contact></friend-contact>
-      <friend-contact></friend-contact>
+      <friend-contact
+        name="Marty Laroy"
+        phone-number="01 387 6789"
+        email-address="marty@test.com"
+        is-favorite="1"
+      ></friend-contact>
+      <friend-contact
+        name="Sharon Stone"
+        phone-number="01 877 6789"
+        email-address="sharon@test.com"
+        is-favorite="0"
+      ></friend-contact>
     </ul>
   </section>
 </template>
