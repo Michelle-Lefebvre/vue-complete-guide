@@ -7,7 +7,8 @@
           >Load Submitted Experiences</base-button
         >
       </div>
-      <ul>
+      <p v-if="isLoading">Loading...</p>
+      <ul v-else>
         <survey-result
           v-for="result in results"
           :key="result.id"
@@ -29,10 +30,12 @@ export default {
   data() {
     return {
       results: [],
+      isLoading: false,
     };
   },
   methods: {
     loadExperiences() {
+      this.isLoading = true;
       fetch(
         // get data is the default request to REST API
         'https://vue-http-demo-mml-default-rtdb.firebaseio.com/surveys.json'
@@ -43,7 +46,8 @@ export default {
           }
         })
         .then((data) => {
-          const results = [];
+          this.isLoading = false;
+          const results = []; // temporary stores results array
           for (const id in data) {
             results.push({
               id: id,
@@ -54,6 +58,10 @@ export default {
           this.results = results;
         });
     },
+  },
+  mounted() {
+    // loads the data stored without clicking button
+    this.loadExperiences();
   },
 };
 </script>
