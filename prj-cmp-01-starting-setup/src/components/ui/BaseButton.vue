@@ -1,34 +1,38 @@
 <template>
-  <button class="btn">{{ btnText }}</button>
+  <button :type="type" :class="btn">
+    <slot></slot>
+  </button>
 </template>
 
 <script>
 export default {
-  props: ['btnText']
+  props: ['type', 'btn']
 }
 </script>
 <style scoped>
-.btn {
-  box-shadow: 3px 4px 0px 0px #8a2a21;
-  background: linear-gradient(to bottom, #c62d1f 5%, #f24437 100%);
-  background-color: #c62d1f;
-  border-radius: 18px;
-  border: 1px solid #d02718;
-  display: inline-block;
+button {
+  padding: 0.75rem 1.5rem;
+  font-family: inherit;
+  background-color: #3a0061;
+  border: 1px solid #3a0061;
+  color: white;
   cursor: pointer;
-  color: #ffffff;
-  font-family: Arial;
-  font-size: 17px;
-  padding: 7px 25px;
-  text-decoration: none;
-  text-shadow: 0px 1px 0px #810e05;
 }
-.btn:hover {
-  background: linear-gradient(to bottom, #f24437 5%, #c62d1f 100%);
-  background-color: #f24437;
+
+button:hover,
+button:active {
+  background-color: #270041;
+  border-color: #270041;
 }
+
+.btn {
+  background-color: transparent;
+  color: #3a0061;
+  border: none;
+}
+
+.btn:hover,
 .btn:active {
-  position: relative;
-  top: 1px;
+  background-color: #edd2ff;
 }
 </style>
