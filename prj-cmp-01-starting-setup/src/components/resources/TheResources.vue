@@ -39,7 +39,8 @@ export default {
   provide() {  // for all child comontnet
     return {
       resources: this.storedResources,
-      addResource: this.addResource
+      addResource: this.addResource,
+      deleteResource: this.removeResource,
     }
   },
   computed: {
@@ -54,6 +55,7 @@ export default {
     setSelectedTab(tab) {
       this.selectedTab = tab
     },
+
     addResource(title, description, url) {
       const newResource = {
         id: new Date().toISOString(),
@@ -63,6 +65,10 @@ export default {
       }
       this.storedResources.unshift(newResource)
       this.selectedTab = 'stored-resources'
+    },
+    removeResource(resId) {
+      const resIndex = this.storedResources.findIndex(res => res.id === resId)
+      this.storedResources.splice(resIndex, 1)
     }
   }
 }
