@@ -11,13 +11,20 @@ const router = createRouter({
   history: createWebHistory(),
   // register routes. Name the urls based on where the user is.
   routes: [
-    { path: '/', redirect: '/teams' }, // NOTE: redirect changes the url while alias does not.
-    // { path: '/teams', component: TeamsList, alias: '/' },
+    { path: '/', redirect: '/teams' },
     {
+      name: 'teams',
       path: '/teams',
       component: TeamsList,
-      children: [{ path: ':teamId', component: TeamMembers, props: true }],
-    },
+      children: [
+        {
+          name: 'team-members',
+          path: ':teamId',
+          component: TeamMembers,
+          props: true,
+        }, // /teams/t1
+      ],
+    }, // our-domain.com/teams => TeamsList
     { path: '/users', component: UsersList },
     { path: '/:notFound(.*)', component: NotFound }, // this should be the last past so it doesn't override any other path
   ],
