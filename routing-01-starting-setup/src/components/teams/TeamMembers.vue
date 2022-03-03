@@ -50,6 +50,14 @@ export default {
   created() {
     this.loadTeamMembers(this.teamId)
   },
+  /* beforeRouteUpdate is an alternative to watch however this is
+  only called if this component is loaded and reloaded through routing
+  */
+  beforeRouteUpdate(to, from, next) {
+    console.log(to, from)
+    // this.loadTeamMembers(to.params.teamId) //
+    next();
+  },
 
   watch: {
     teamId(newId) {

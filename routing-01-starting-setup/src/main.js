@@ -27,17 +27,37 @@ const router = createRouter({
         }, // /teams/t1
       ],
     }, // our-domain.com/teams => TeamsList
-    { path: '/users', components: { default: UsersList, footer: UsersFooter } },
+    {
+      path: '/users',
+      components: {
+        default: UsersList,
+        footer: UsersFooter,
+      },
+      beforeEnter(to, from, next) {
+        console.log(to, from);
+        next();
+      },
+    },
     { path: '/:notFound(.*)', component: NotFound }, // this should be the last past so it doesn't override any other path
   ],
   linkActiveClass: 'active',
-  scrollBehavior(to, from, savedPosition) {
+  scrollBehavior(_, _2, savedPosition) {
     if (savedPosition) {
       return savedPosition;
     }
     return { left: 0, top: 0 };
   },
 });
+
+router.beforeEach(function (to, from, next) {
+  // if (to.name === 'team-members') {
+  //   next();
+  // } else {
+  //   next({ name: 'team-members', params: { teamId: 't2' } });
+  // }
+  next();
+});
+
 const app = createApp(App);
 
 app.use(router);

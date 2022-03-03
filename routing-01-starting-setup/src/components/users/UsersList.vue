@@ -1,5 +1,6 @@
 <template>
   <button @click="confirmInput">Confirm</button>
+  <button @click="saveChanges">Save Changes</button>
   <ul>
     <user-item v-for="user in users" :key="user.id" :name="user.fullName" :role="user.role"></user-item>
   </ul>
@@ -13,6 +14,13 @@ export default {
     UserItem,
   },
   inject: ['users'],
+
+  data() {
+    return {
+      changesSaved: false,
+    }
+  },
+
   methods: {
     confirmInput() {
       // do something then navigate to another page
@@ -20,6 +28,30 @@ export default {
       this.$router.back()
       this.$router.forward()
     },
+    saveChanges() {
+      this.changesSaved = true
+    }
+  },
+
+  beforeRouteEnter(to, from, next) {
+    console.log(to, from)
+    next()
+  },
+
+  beforeRouteLeave(to, from, next) {
+    console.log(to, from)
+    if (this.changesSaved) {
+      next()
+    } else {
+      const userWantsToLeave = confirm('Are you sure you want to leave? You have unsaved changes!')
+      next(userWantsToLeave)  // this is the same as next() it won't save the changes
+    }
+  },
+
+  unmounted() {
+    // to run code whenever this component is left
+    // this doesn't give us a change to stop the  navigation to another page
+    console.log('unmounted')
   },
 };
 </script>
