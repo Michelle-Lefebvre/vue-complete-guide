@@ -22,6 +22,7 @@ const router = createRouter({
         {
           name: 'team-members',
           path: ':teamId',
+          meta: { needsAuth: true },
           component: TeamMembers,
           props: true,
         }, // /teams/t1
@@ -38,7 +39,7 @@ const router = createRouter({
         next();
       },
     },
-    { path: '/:notFound(.*)', component: NotFound }, // this should be the last past so it doesn't override any other path
+    { path: '/:notFound(.*)', component: NotFound }, // this should be the last path so it doesn't override any other path
   ],
   linkActiveClass: 'active',
   scrollBehavior(_, _2, savedPosition) {
@@ -50,6 +51,13 @@ const router = createRouter({
 });
 
 router.beforeEach(function (to, from, next) {
+  if (to.meta.needsAuth) {
+    // check user permissions
+    console.log(to, from);
+    next(true);
+  } else {
+    next();
+  }
   // if (to.name === 'team-members') {
   //   next();
   // } else {
