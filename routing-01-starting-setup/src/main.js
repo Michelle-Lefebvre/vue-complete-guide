@@ -31,6 +31,12 @@ const router = createRouter({
     { path: '/:notFound(.*)', component: NotFound }, // this should be the last past so it doesn't override any other path
   ],
   linkActiveClass: 'active',
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    }
+    return { left: 0, top: 0 };
+  },
 });
 const app = createApp(App);
 
