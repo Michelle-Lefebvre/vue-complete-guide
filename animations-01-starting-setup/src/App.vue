@@ -15,7 +15,7 @@
 
   <div class="container">
     <transition
-      name="para"
+      :css="false"
       @before-enter="beforeEnterTrans"
       @enter="enterTrans"
       @after-enter="afterEnterTrans"
@@ -38,10 +38,18 @@
       <button @click="hideUsers" v-else>Hide Users</button>
     </transition>
   </div>
+
+  <div class="container">
+    <users-list></users-list>
+  </div>
 </template>
 
 <script>
+import UsersList from './components/UsersList.vue';
 export default {
+  components: {
+    UsersList
+  },
   data() {
     return {
       dialogIsVisible: false,
