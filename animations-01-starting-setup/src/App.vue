@@ -1,55 +1,14 @@
 <template>
-  <div class="container">
-    <div class="block" :class="{ animate: animatedBlock }"></div>
-    <button @click="animateBlock">Animate</button>
-  </div>
-  <!-- can't use v-if on base-modal because transition won't work change to :open-->
-  <base-modal @close="hideDialog" :open="dialogIsVisible">
-    <p>This is a test dialog!</p>
-    <button @click="hideDialog">Close it!</button>
-  </base-modal>
-
-  <div class="container">
-    <button @click="showDialog">Show Dialog</button>
-  </div>
-
-  <div class="container">
-    <transition
-      :css="false"
-      @before-enter="beforeEnterTrans"
-      @enter="enterTrans"
-      @after-enter="afterEnterTrans"
-      @before-leave="beforeLeaveTrans"
-      @leave="leaveTrans"
-      @after-leave="afterLeaveTrans"
-      @enter-cancelled="enterCancelledTrans"
-      @leave-cancelled="leaveCancelledTrans"
-    >
-      <p
-        v-if="paraIsVisible"
-      >Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quos inventore soluta natus quia minus facilis, harum nemo iste quod. Molestiae enim nulla nesciunt ipsa rerum nobis dolorum, tempora repellat tenetur.</p>
+  <router-view v-slot="slotProps">
+    <transition name="route" mode="out-in">
+      <component :is="slotProps.Component"></component>
     </transition>
-    <button @click="toggleParagraph">Toggle Paragraph</button>
-  </div>
-
-  <div class="container">
-    <transition name="fade-button" mode="out-in">
-      <button @click="showUsers" v-if="!usersAreVisible">Show Users</button>
-      <button @click="hideUsers" v-else>Hide Users</button>
-    </transition>
-  </div>
-
-  <div class="container">
-    <users-list></users-list>
-  </div>
+  </router-view>
 </template>
 
 <script>
-import UsersList from './components/UsersList.vue';
 export default {
-  components: {
-    UsersList
-  },
+
   data() {
     return {
       dialogIsVisible: false,
@@ -195,6 +154,18 @@ button:active {
 .fade-button-enter-to,
 .fade-button-leave-from {
   opacity: 1;
+}
+
+/* .route-enter-from {
+} */
+.route-enter-active {
+  transition: opacity 0.3s ease-out;
+}
+/* .route-enter-to {
+} */
+
+.route-leave-active {
+  transition: opacity 0.3s ease-in;
 }
 
 @keyframes slide-fade {
