@@ -14,7 +14,17 @@
   </div>
 
   <div class="container">
-    <transition name="para">
+    <transition
+      name="para"
+      @before-enter="beforeEnterTrans"
+      @enter="enterTrans"
+      @after-enter="afterEnterTrans"
+      @before-leave="beforeLeaveTrans"
+      @leave="leaveTrans"
+      @after-leave="afterLeaveTrans"
+      @enter-cancelled="enterCancelledTrans"
+      @leave-cancelled="leaveCancelledTrans"
+    >
       <p
         v-if="paraIsVisible"
       >Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quos inventore soluta natus quia minus facilis, harum nemo iste quod. Molestiae enim nulla nesciunt ipsa rerum nobis dolorum, tempora repellat tenetur.</p>
@@ -38,6 +48,8 @@ export default {
       animatedBlock: false,
       paraIsVisible: false,
       usersAreVisible: false,
+      enterInterval: null,
+      leaveInterval: null,
     };
   },
   methods: {
@@ -58,6 +70,55 @@ export default {
     },
     hideUsers() {
       this.usersAreVisible = false;
+    },
+    beforeEnterTrans(el) {
+      console.log('Before enter Transition')
+      console.log(el)
+      el.style.opacity = 0
+    },
+    enterTrans(el, done) {
+      console.log('Enter Transition')
+      console.log(el)
+      let round = 1
+      this.enterInterval = setInterval(() => {
+        el.style.opacity = round * 0.03
+        round++
+        if (round > 100) {
+          clearInterval(this.enterInterval)
+          done()
+        }
+      }, 20)
+    },
+    afterEnterTrans(el) {
+      console.log('After entering Transition')
+      console.log(el)
+    },
+    beforeLeaveTrans(el) {
+      console.log('Before leaving Transition')
+      console.log(el)
+      el.style.opacity = 1
+    },
+    leaveTrans(el, done) {
+      let round = 1
+      this.leaveInterval = setInterval(() => {
+        el.style.opacity = 1 - round * 0.01
+        round++
+        if (round > 100) {
+          clearInterval(this.leaveInterval)
+          done()
+        }
+      }, 20)
+    },
+    afterLeaveTrans(el) {
+      console.log('Before leaving Transition')
+      console.log(el)
+    },
+    // @enter-cancelled & @leave-cancelled will stop animation flickering when leaving transition
+    enterCancelledTrans() {
+      clearInterval(this.enterInterval)
+    },
+    leaveCancelledTrans() {
+      clearInterval(this.leaveInterval)
     },
   },
 };
@@ -108,34 +169,6 @@ button:active {
 .animate {
   transform: translateX(-150px);
   animation: slide-fade 0.3s ease-out forwards;
-}
-
-.para-enter-from {
-  opacity: 0;
-  transform: translateY(-30px);
-}
-
-.para-enter-active {
-  transition: all 0.3s ease-out;
-}
-
-.para-enter-to {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.para-leave-from {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.para-leave-active {
-  transition: all 0.3s ease-in;
-}
-
-.para-leave-to {
-  opacity: 0;
-  transform: translateY(30px);
 }
 
 .fade-button-enter-from,
