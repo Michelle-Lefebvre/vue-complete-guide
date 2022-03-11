@@ -37,6 +37,7 @@
 
 <script>
 export default {
+  emits: ['save-data'],
   data() {
     return {
       firstname: '',
@@ -55,7 +56,8 @@ export default {
         rate: this.rate,
         areas: this.areas
       }
-      console.log(formData)
+      // TO DO form validation
+      this.$emit('save-data', formData)
     }
   },
 }
