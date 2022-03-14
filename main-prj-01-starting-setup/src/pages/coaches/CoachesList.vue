@@ -71,6 +71,7 @@ export default {
     },
     forceRefresh() {
       this.$forceUpdate()
+      console.log('Refresh button pressed')
     }
   },
 };
