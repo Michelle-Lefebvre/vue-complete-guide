@@ -9,6 +9,8 @@ export default {
       areas: data.areas,
     };
 
+    fetch('https://teahcujygdtrtrnagwjy.supabase.co/coaches.json');
+
     context.commit('registerCoach', coachData);
   },
 };
