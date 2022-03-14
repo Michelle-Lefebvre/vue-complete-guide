@@ -10,7 +10,7 @@ const store = createStore({
   },
   state() {
     return {
-      userId: 'c3', // TODO remove hardcoded
+      userId: 'c3', // TODO remove hardcoded this is the root state
     };
   },
   getters: {
